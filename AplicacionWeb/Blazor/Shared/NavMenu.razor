@@ -22,8 +22,18 @@
         <AuthorizeView Roles="Administrador">
             <Authorized>
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="">
-                        <span class="oi oi-plus" aria-hidden="true"></span> Usuarios
+                    <NavLink class="nav-link" href="Usuarios">
+                        <span class="oi oi-person" aria-hidden="true"></span> Usuarios
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="Administrador">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Productos">
+                        <span class="oi oi-layers" aria-hidden="true"></span> Productos
                     </NavLink>
                 </div>
             </Authorized>

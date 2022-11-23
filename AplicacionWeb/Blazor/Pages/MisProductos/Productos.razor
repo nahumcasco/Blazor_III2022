@@ -1,0 +1,59 @@
+﻿@page "/Productos"
+@using Modelos
+<AuthorizeView Roles="Administrador">
+	<Authorized Context="AuthenticationState">
+		<h2>Lista de productos</h2>
+		<br />
+		<div class="form-group row">
+			<div class="col-sm-10">
+				<a href="/Productos/Nuevo" class="btn btn-primary m-1">Nuevo Producto</a>
+			</div>
+		</div>
+
+		@if(listaProductos == null)
+		{
+			<p>No existen productos en la base de datos</p>
+		}
+		else
+		{
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Descripción</th>
+						<th>Existencia</th>
+						<th>Precio</th>
+						<th>Fecha Creación</th>
+						<th>Imagen</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach(Producto prod in listaProductos)
+					{
+						<tr>
+							<th>@prod.Codigo</th>
+							<th>@prod.Descripcion</th>
+							<th>@prod.Existencia</th>
+							<th>@prod.Precio</th>
+							<th>@prod.FechaCreacion.ToShortDateString()</th>
+							@if (prod.Imagen != null)
+							{
+								string base64 = Convert.ToBase64String(prod.Imagen);
+								string imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+								<th>
+									<img width="40" height="40" src="@imgSrc" />
+								</th>
+							}
+							else
+							{
+								<th></th>
+							}
+							<th><a class="btn btn-success" href="@($"/Productos/Editar/{prod.Codigo}")">Edidar</a></th>
+						</tr>
+					}
+				</tbody>
+			</table>
+		}
+
+	</Authorized>
+</AuthorizeView>

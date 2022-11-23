@@ -1,6 +1,7 @@
 using Blazor;
 using Blazor.Interfaces;
 using Blazor.Servicios;
+using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,11 @@ Config cadenaConexion = new Config(builder.Configuration.GetConnectionString("My
 builder.Services.AddSingleton(cadenaConexion);
 
 builder.Services.AddScoped<ILoginServicio, LoginServicio>();
+builder.Services.AddScoped<IUsuarioServicio, UsuarioServicio>();
+builder.Services.AddScoped<IProductoServicio, ProductoServicio>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+builder.Services.AddSweetAlert2();
 
 var app = builder.Build();
 
