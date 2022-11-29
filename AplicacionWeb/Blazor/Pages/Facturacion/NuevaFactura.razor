@@ -1,0 +1,111 @@
+﻿@page "/NuevaFactura"
+
+<AuthorizeView Roles="Administrador">
+	<Authorized Context="AuthenticationState">
+
+		<EditForm Model="@factura">
+			<div class="rz-card card" style="width:100%">
+				<div class="form-group row">
+					<div class="col-sm-2">
+						<b>Identidad Cliente:</b>
+						<InputText id="IdentidadCliente" class="form-control" @bind-Value="factura.IdentidadCliente" />
+					</div>
+
+					<div class="col-sm-2">
+						<b>Fecha:</b>
+						<RadzenDatePicker id="Fecha" class="w-100" DateFormat="d" @bind-Value="factura.Fecha" />
+					</div>
+				</div>
+			</div>
+			<br />
+			<div class="rz-card card" style="width:100%">
+				<div class="form-group row">
+					<div class="col-sm-2">
+						<b>Código Producto:</b>
+						<InputText id="Codigo" class="form-control" @bind-value="codigoProducto" ValueExpression="@( () => @codigoProducto)" />
+					</div>
+
+					<div class="col-sm-1">
+						<b>Buscar:</b>
+						<input type="submit" class="btn btn-primary" value="Buscar" @onclick="@BuscarProducto" />
+					</div>
+
+					<div class="col-sm-6">
+						<b>Descripción:</b>
+						<InputText readonly id="Descripcion" class="form-control" @bind-Value="@producto.Descripcion" />
+					</div>
+
+					<div class="col-sm-2">
+						<b>Cantidad:</b>
+						<InputNumber id="Cantidad" class="form-control" @bind-Value="@cantidad" />
+					</div>
+
+					<div class="col-sm-1">
+						<b>Agregar:</b>
+						<input type="submit" class="btn btn-primary" value="Agregar" @onclick="@AgregarProducto" />
+					</div>
+				</div>
+			</div>
+			 <br />
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Producto</th>
+						<th>Cantidad</th>
+						<th>Precio</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var det in listaDetalleFactura)
+					{
+						<tr>
+							<td>@det.CodigoProducto</td>
+							<td>@det.Producto</td>
+							<td>@det.Cantidad</td>
+							<td>@det.Precio</td>
+							<td>@det.Total</td>
+						</tr>
+					}					
+				</tbody>
+			</table>
+			<br />
+			<div align="right"> 
+				<div class="form-group row">
+					<label for="SubTotal" class="col-sm-10 col-form-label">SubTotal</label>
+					<div class="col-md-2">
+						<InputNumber readonly id="SubTotal" TValue="Decimal" class="form-control" @bind-value="factura.SubTotal" ValueExpression="@( () => factura.SubTotal )"/>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="Descuento" class="col-sm-10 col-form-label">Descuento</label>
+					<div class="col-md-2">
+						<InputNumber id="Descuento" TValue="Decimal" class="form-control" @bind-value="factura.Descuento" ValueExpression="@( () => factura.Descuento )"/>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="ISV" class="col-sm-10 col-form-label">Impuesto</label>
+					<div class="col-md-2">
+						<InputNumber readonly id="ISV" TValue="Decimal" class="form-control" @bind-value="factura.ISV" ValueExpression="@( () => factura.ISV )"/>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="Total" class="col-sm-10 col-form-label">Total</label>
+					<div class="col-md-2">
+						<InputNumber readonly id="Total" TValue="Decimal" class="form-control" @bind-value="factura.Total" ValueExpression="@( () => factura.Total )"/>
+					</div>
+				</div>
+			</div>
+			<div align="right">
+				<input type="submit" class="btn btn-primary" value="Guardar Factura" @onclick="Guardar" />
+			</div>
+
+		</EditForm>
+
+	</Authorized>
+</AuthorizeView>
